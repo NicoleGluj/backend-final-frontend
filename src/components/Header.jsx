@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import logo from "../assets/logo.png"
 
 const Header = () => {
@@ -9,18 +10,22 @@ const Header = () => {
         </div>
 
         <nav className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center gap-5">
-          <a href="">Inicio</a>
-          <a href="">Productos</a>
-          <a href="">Conocenos</a>
+          <Link to="/">Inicio</Link>
+          <Link to="products">Productos</Link>
+          <Link to="aboutus">Conocenos</Link>
         </nav>
 
         <div className="flex items-center justify-center gap-3">
-          <button className="px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+          <Link
+            to="/register"
+            className="px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
             Registrarme
-          </button>
-          <button className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+          </Link>
+          <Link
+            to="/login"
+            className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
             Iniciar Sesion
-          </button>
+          </Link>
         </div>
 
       </header>
