@@ -2,7 +2,6 @@ import Layout from "../components/Layout"
 import Slide1 from "../assets/slide1.jpg";
 import Slide2 from "../assets/slide2.jpg";
 import Slide3 from "../assets/slide3.jpg";
-import Img1 from "../assets/imagen1.png";
 import { Link } from "react-router-dom";
 import { GiftIcon, ShieldCheckIcon, TruckIcon, UserIcon } from "@heroicons/react/16/solid";
 
