@@ -11,8 +11,8 @@ const Header = () => {
 
         <nav className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center gap-5">
           <Link to="/">Inicio</Link>
-          <Link to="products">Productos</Link>
-          <Link to="aboutus">Conocenos</Link>
+          <Link to="/products">Productos</Link>
+          <Link to="/aboutus">Conocenos</Link>
         </nav>
 
         <div className="flex items-center justify-center gap-3">
