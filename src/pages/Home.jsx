@@ -1,7 +1,10 @@
 import Layout from "../components/Layout"
-import Slide1 from "../assets/slide1.jpg";
-import Slide2 from "../assets/slide2.jpg";
-import Slide3 from "../assets/slide3.jpg";
+import ImgHome1 from "../assets/home/home1.jpg";
+import ImgHome2 from "../assets/home/home2.jpg";
+import ImgHome3 from "../assets/home/home3.jpg";
+import ImgHome4 from "../assets/home/home4.jpg";
+import ImgHome5 from "../assets/home/home5.jpg";
+import ImgHome6 from "../assets/home/home6.jpg";
 import { Link } from "react-router-dom";
 import { GiftIcon, ShieldCheckIcon, TruckIcon, UserIcon } from "@heroicons/react/16/solid";
 
@@ -10,13 +13,13 @@ const Home = () => {
     <Layout>
       <section className="m-4 grid grid-cols-[70%_29%] grid-rows-2 gap-2 h-[85vh]">
         <div className="row-span-2">
-          <img src={Slide1} alt="" className="w-full h-full object-cover rounded-xl" />
+          <img src={ImgHome1} alt="" className="w-full h-full object-cover rounded-xl" />
         </div>
         <div>
-          <img src={Slide2} alt="" className="w-full h-full object-cover rounded-xl" />
+          <img src={ImgHome2} alt="" className="w-full h-full object-cover rounded-xl" />
         </div>
         <div>
-          <img src={Slide3} alt="" className="w-full h-full object-cover rounded-xl" />
+          <img src={ImgHome3} alt="" className="w-full h-full object-cover rounded-xl" />
         </div>
       </section>
 
@@ -55,7 +58,7 @@ const Home = () => {
       <section className="w-full px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="relative rounded-lg overflow-hidden shadow-lg group cursor-pointer">
-            <img src={Slide1} alt="Sets" className="w-full h-80 object-cover" />
+            <img src={ImgHome4} alt="Sets" className="w-full h-80 object-cover" />
             <div className="absolute bottom-0 w-full bg-white/60 bg-opacity-70 px-4 py-3 flex justify-center items-center">
               <h3 className="text-xl font-bold uppercase text-[#d97345]">Combos</h3>
             </div>
@@ -68,9 +71,9 @@ const Home = () => {
           </div>
 
           <div className="relative rounded-lg overflow-hidden shadow-lg group cursor-pointer">
-            <img src={Slide2} alt="Bibliotecas" className="w-full h-80 object-cover" />
+            <img src={ImgHome5} alt="Bibliotecas" className="w-full h-80 object-cover" />
             <div className="absolute bottom-0 w-full bg-white/60 bg-opacity-70 px-4 py-3 flex justify-center items-center">
-              <h3 className="text-xl font-bold uppercase text-[#d97345]">Jugueteros</h3>
+              <h3 className="text-xl font-bold uppercase text-[#d97345]">Guardado</h3>
             </div>
             <Link
               to="/productos"
@@ -81,9 +84,9 @@ const Home = () => {
           </div>
 
           <div className="relative rounded-lg overflow-hidden shadow-lg group cursor-pointer">
-            <img src={Slide3} alt="Todos los productos" className="w-full h-80 object-cover" />
+            <img src={ImgHome6} alt="Todos los productos" className="w-full h-80 object-cover" />
             <div className="absolute bottom-0 w-full bg-white/60 bg-opacity-70 px-4 py-3 flex justify-center items-center">
-              <h3 className="text-xl font-bold uppercase text-[#d97345]">Productos</h3>
+              <h3 className="text-xl font-bold uppercase text-[#d97345]">Funcionales</h3>
             </div>
             <Link
               to="/productos"

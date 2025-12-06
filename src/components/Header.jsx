@@ -97,16 +97,16 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <div className={`lg:hidden flex flex-col gap-2 bg-white shadow-md px-4 pb-4 pt-2 origin-top transform transition-all duration-300 ease-in-out ${isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+        <div className={`lg:hidden flex flex-col items-center justify-center w-auto mx-auto gap-2 bg-white pb-4 pt-2 origin-top transform transition-all duration-300 ease-in-out ${isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
           }`}>
           <Link
             to="/register"
-            className="px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            className="px-10 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
             Registrarme
           </Link>
           <Link
             to="/login"
-            className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            className="px-10 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
             Iniciar Sesion
           </Link>
         </div>
