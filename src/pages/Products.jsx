@@ -49,7 +49,7 @@ const Products = () => {
           </form>
           <div className="flex justify-center items-center gap-2">
             <button
-              className="border border-[#C7C7C7] p-1 px-4 rounded-2xl font-semibold text-[#C7C7C7]"
+              className="px-4 rounded-2xl font-semibold text-[#C7C7C7]"
               type="submit">
               Aplicar filtros
             </button>
