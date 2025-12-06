@@ -84,6 +84,7 @@ const AboutUs = () => {
               </div>
             </div>
           </section>
+
         </section>
       </Layout >
     </>

@@ -3,6 +3,7 @@ import Home from "../pages/Home"
 import AboutUs from "../pages/AboutUs"
 import Products from "../pages/Products"
 import Register from "../pages/Register"
+import Login from "../pages/Login"
 
 const RouterApp = () => {
   return (
@@ -12,6 +13,7 @@ const RouterApp = () => {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/products" element={<Products />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   )
