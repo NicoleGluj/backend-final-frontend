@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import Layout from "../components/Layout"
+import { CATEGORIES } from "../constants/categories"
+import { ToastMessage } from "../components/ToastMessage"
 
 const Products = () => {
   const initialErrorState = {
