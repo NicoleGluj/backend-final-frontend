@@ -40,6 +40,13 @@ const Header = () => {
               Conocenos
             </Link>
           </li>
+          <li>
+            <Link
+              to="/contact"
+              className="relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:w-full after:origin-bottom after:scale-x-0 after:bg-[#FDC655] after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom hover:after:scale-x-100">
+              Contacto
+            </Link>
+          </li>
         </ul>
       </nav>
       <div className="hidden lg:flex items-center justify-center gap-3 mr-6 ml-auto">
@@ -93,6 +100,14 @@ const Header = () => {
                 onClick={toggleMenu}
                 className="relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:w-full after:origin-bottom after:scale-x-0 after:bg-[#EC6A5D] after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom hover:after:scale-x-100">
                 Conocenos
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                onClick={toggleMenu}
+                className="relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:w-full after:origin-bottom after:scale-x-0 after:bg-[#EC6A5D] after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom hover:after:scale-x-100">
+                Contacto
               </Link>
             </li>
           </ul>
