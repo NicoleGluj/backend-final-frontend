@@ -203,6 +203,24 @@ const Products = () => {
             </button>
           </div>
         </section>
+        <section>
+          {products.map((p, i) => (
+            <div>
+              <h3>{p.name}</h3>
+              <p>{p.description}</p>
+              <p>{p.price}</p>
+              <p>{p.stock}</p>
+              <p>{p.category}</p>
+              {user &&
+                <div>
+                  <button onClick={() => handleUpdateProduct(p)}>Actualizar</button>
+                  <button onClick={() => deleteProduct(p._id)}>Borrar</button>
+                </div>
+              }
+            </div>))}
+        </section>
+        {!responseServer.error.fetch && <ToastMessage color={"red"} msg={responseServer.notification} />}
+        {!responseServer.success && <ToastMessage color={"green"} msg={responseServer.notification} />}
       </Layout >
     </>
   )
