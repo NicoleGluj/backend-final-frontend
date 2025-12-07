@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { GiftIcon, ShieldCheckIcon, TruckIcon, UserIcon } from "@heroicons/react/16/solid";
 
 const Home = () => {
+
   return (
     <Layout>
       <section className="m-4 grid grid-cols-[70%_29%] grid-rows-2 gap-2 h-[85vh]">
