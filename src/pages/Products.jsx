@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Layout from "../components/Layout"
 import { CATEGORIES } from "../constants/categories"
 import { ToastMessage } from "../components/ToastMessage"
+import { useAuth } from "../context/AuthContext"
 
 const Products = () => {
   const initialErrorState = {
@@ -25,7 +26,7 @@ const Products = () => {
 
   const [responseServer, setResponseServer] = useState(initialErrorState)
 
-  // const [user, setUser] = useAuth()
+  const [user, setUser] = useAuth()
 
   const fetchingProducts = async () => {
     setResponseServer(initialErrorState)
@@ -50,8 +51,8 @@ const Products = () => {
       setResponseServer({
         success: false,
         notification: "Error al cargar los productos",
-        eror: {
-          ...setResponseServer.error,
+        error: {
+          ...responseServer.error,
           fetch: false
         }
       })
@@ -62,7 +63,7 @@ const Products = () => {
     fetchingProducts()
   }, [])
 
-  const deleteProduct = async () => {
+  const deleteProduct = async (idProduct) => {
     if (!confirm("Esta seguro que desea eliminar el producto?")) {
       return
     }
@@ -85,7 +86,15 @@ const Products = () => {
       setProducts(products.filter((p) => p._id !== idProduct))
       alert("Producto borrado con exito")
     } catch (e) {
-      setResponseServer({ ...error, delete: "Error al eliminar el producto" })
+      setResponseServer({
+        ...responseServer,
+        error: {
+          ...responseServer.error,
+          delete: "Error al eliminar el producto"
+        },
+        success: false,
+        notification: "Error al eliminar el producto"
+      })
     }
   }
 
@@ -221,8 +230,12 @@ const Products = () => {
               }
             </div>))}
         </section>
-        {!responseServer.error.fetch && <ToastMessage color={"red"} msg={responseServer.notification} />}
-        {!responseServer.success && <ToastMessage color={"green"} msg={responseServer.notification} />}
+        {responseServer.error.fetch && (
+          <ToastMessage color="red" msg={responseServer.notification} />
+        )}
+        {responseServer.success && (
+          <ToastMessage color="green" msg={responseServer.notification} />
+        )}
       </Layout >
     </>
   )

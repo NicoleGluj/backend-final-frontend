@@ -20,7 +20,7 @@ const Register = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch("http:localhost:3000/auth/register", {
+      const response = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -29,7 +29,7 @@ const Register = () => {
       const responseData = await response.json()
 
       if (!responseData) {
-        alert(responseData.error)
+        alert(responseData.error || "Error al registarse")
         return
       }
 

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useAuth } from "../context/AuthContext"
 
 const UpdateProduct = ({ product, onUpdate, onClose }) => {
   const [loader, setLoader] = useState(false)
@@ -9,7 +10,7 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
     price: Number(product.price),
     category: product.category
   })
-  // const [token, setToken] = useAuth()
+  const [token, setToken] = useAuth()
 
   const handleChange = (e) => {
     setFormData({
@@ -20,6 +21,7 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
 
     const dataToUpdate = {
       ...formData,

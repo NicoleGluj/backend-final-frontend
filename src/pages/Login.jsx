@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
+import { useAuth } from "../context/AuthContext"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ const Login = () => {
     password: ""
   })
 
-  // const {login} = useAuth()
+  const { login } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -21,7 +22,7 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch("http:localhost:3000/auth/login", {
+      const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -30,7 +31,7 @@ const Login = () => {
       const responseData = await response.json()
 
       if (!responseData) {
-        alert(responseData.error)
+        alert(responseData.error || "Error al iniciar sesion")
         return
       }
 

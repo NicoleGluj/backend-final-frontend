@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Layout from "../components/Layout"
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -15,7 +16,7 @@ const Contact = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventdefault()
+    e.preventDefault()
 
     try {
       const response = await fetch(`http://localhost:3000/email/send`, {
@@ -28,6 +29,12 @@ const Contact = () => {
 
       const dataResponse = await response.json()
       console.log(dataResponse)
+
+      setForm({
+        email: "",
+        subject: "",
+        message: ""
+      })
     } catch (error) {
       console.log(error)
     }
@@ -35,42 +42,44 @@ const Contact = () => {
 
   return (
     <>
-      <section>
-        <div>
+      <Layout>
+        <section>
           <div>
-            <h1 className="text-5xl font-bold text-[#FDC655] mb-4">
-              Contactanos
-            </h1>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Dejanos tu mensaje y responderemos a la brevedad
-            </p>
+            <div>
+              <h1 className="text-5xl font-bold text-[#FDC655] mb-4">
+                Contactanos
+              </h1>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                Dejanos tu mensaje y responderemos a la brevedad
+              </p>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <p>Correo Electronico:</p>
+                <input
+                  name="email"
+                  type="email"
+                  onChange={handleChange} />
+              </div>
+              <div>
+                <p>Asunto:</p>
+                <input
+                  name="subject"
+                  type="text"
+                  onChange={handleChange} />
+              </div>
+              <div>
+                <p>Mensaje:</p>
+                <textarea
+                  type="text"
+                  name="message"
+                  onChange={handleChange} />
+              </div>
+              <button type="submit">Enviar</button>
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <p>Correo Electronico:</p>
-              <input
-                name="email"
-                type="email"
-                onChange={handleChange} />
-            </div>
-            <div>
-              <p>Asunto:</p>
-              <input
-                name="subject"
-                type="text"
-                onChange={handleChange} />
-            </div>
-            <div>
-              <p>Mensaje:</p>
-              <input
-                name="text"
-                type="message"
-                onChange={handleChange} />
-            </div>
-            <button type="submit">Enviar</button>
-          </form>
-        </div>
-      </section>
+        </section>
+      </Layout>
     </>
   )
 }
