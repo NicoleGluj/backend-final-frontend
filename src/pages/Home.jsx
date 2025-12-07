@@ -63,7 +63,7 @@ const Home = () => {
               <h3 className="text-xl font-bold uppercase text-[#d97345]">Combos</h3>
             </div>
             <Link
-              to="/productos"
+              to="/products"
               className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out bg-[#EEB749] bg-opacity-30 text-white text-lg font-semibold"
             >
               Ver Combos
@@ -76,10 +76,10 @@ const Home = () => {
               <h3 className="text-xl font-bold uppercase text-[#d97345]">Guardado</h3>
             </div>
             <Link
-              to="/productos"
+              to="/products"
               className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out bg-[#A4CBC7] bg-opacity-30 text-white text-lg font-semibold"
             >
-              Ver Jugueteros
+              Ver Guardado
             </Link>
           </div>
 
@@ -89,10 +89,10 @@ const Home = () => {
               <h3 className="text-xl font-bold uppercase text-[#d97345]">Funcionales</h3>
             </div>
             <Link
-              to="/productos"
+              to="/products"
               className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out bg-[#F0655E] bg-opacity-30 text-white text-lg font-semibold"
             >
-              Ver Productos
+              Ver Funcionales
             </Link>
           </div>
         </div>
