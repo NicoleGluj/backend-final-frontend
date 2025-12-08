@@ -233,12 +233,12 @@ const Products = () => {
 
         {/* SECTION PANTALLAS CHICAS */}
         <div className="flex flex-col items-start mx-4 mt-3 sm:flex-row sm:items-center sm:gap-4">
-
-          <div className="lg:hidden w-full sm:w-fit px-5 py-2 border bg-[#FFA64C] text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
-            <Link to="/agregar-producto" className="block text-center w-full">
-              AÑADIR PRODUCTO
-            </Link>
-          </div>
+          {user &&
+            <div className="lg:hidden w-full sm:w-fit px-5 py-2 border bg-[#FFA64C] text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+              <Link to="/agregar-producto" className="block text-center w-full">
+                AÑADIR PRODUCTO
+              </Link>
+            </div>}
           <div className="mt-3 lg:hidden inline-flex items-center gap-3 border border-gray-400 p-1 px-3 rounded-2xl sm:mt-0 relative">
             <button
               onClick={toggleMenu}
