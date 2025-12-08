@@ -8,6 +8,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 const AddProduct = () => {
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState("")
+  const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -28,8 +31,13 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (loading) return
 
+    setError("")
+    setSuccess("")
     try {
+      setLoading(true)
+
       const formDataToSend = new FormData()
 
       formDataToSend.append("name", formData.name)
@@ -57,7 +65,7 @@ const AddProduct = () => {
         return
       }
 
-      alert("Producto agregado con exito")
+      setSuccess("Producto agregado con exito. Redirigiendo...")
       setFormData({
         name: "",
         description: "",
@@ -68,9 +76,14 @@ const AddProduct = () => {
       })
       setImage(null)
 
-      navigate("/products")
+      setTimeout(() => {
+        navigate("/products")
+      }, 1500)
     } catch (error) {
-      console.log("Error al agregar el producto")
+      console.error("Error al agregar producto:", error)
+      setError(error.message || "Error inesperado al agregar producto")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -98,7 +111,7 @@ const AddProduct = () => {
                 type="text"
                 name="name"
                 minLength={3}
-                maxLength={20}
+                maxLength={40}
                 required
                 onChange={handleChange}
                 value={formData.name}
@@ -170,14 +183,31 @@ const AddProduct = () => {
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <button
+                disabled={loading}
                 type="submit"
                 className="px-5 py-1 border-2 border-[#FFA64C] text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
               >
-                Agregar
+                {loading ? "Creando producto..." : "Agregar"}
               </button>
             </div>
           </form>
+          {error && (
+            <p
+              data-testid="error-message"
+              className="mt-4 text-sm text-[#e74d0b] font-semibold text-center"
+            >
+              {error}
+            </p>
+          )}
 
+          {success && (
+            <p
+              data-testid="success-message"
+              className="mt-4 text-sm text-[#649705]  font-semibold text-center"
+            >
+              Producto creado con exito. Redirigiendo...
+            </p>
+          )}
         </div>
       </section>
 
