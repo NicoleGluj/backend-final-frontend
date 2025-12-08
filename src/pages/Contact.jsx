@@ -5,6 +5,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 const Contact = () => {
+  const [success, setSuccess] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     email: "",
     subject: "",
@@ -20,6 +23,11 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (loading) return
+
+    setError("")
+    setSuccess("")
+    setLoading(true)
 
     try {
       const response = await fetch(`${API_URL}/email/send`, {
@@ -31,7 +39,7 @@ const Contact = () => {
       })
 
       const dataResponse = await response.json()
-      console.log(dataResponse)
+      setSuccess("Correo enviado con éxito")
 
       setForm({
         email: "",
@@ -39,7 +47,10 @@ const Contact = () => {
         message: ""
       })
     } catch (error) {
-      console.log(error)
+      console.error("Error al enviar correo:", error)
+      setError(error.message || "Error inesperado al enviar correo")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -94,12 +105,30 @@ const Contact = () => {
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <button
+                disabled={loading}
                 type="submit"
                 className="px-5 py-1 border-2 border-[#FFA64C] text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
               >
-                Enviar
+                {loading ? "Enviando el correo..." : "Enviar"}
               </button>
             </div>
+            {error && (
+              <p
+                data-testid="error-message"
+                className="mt-4 text-sm text-[#e74d0b] font-semibold text-center"
+              >
+                {error}
+              </p>
+            )}
+
+            {success && (
+              <p
+                data-testid="success-message"
+                className="mt-4 text-sm text-[#649705]  font-semibold text-center"
+              >
+                Correo enviado con exito
+              </p>
+            )}
           </form>
         </div>
       </section>
