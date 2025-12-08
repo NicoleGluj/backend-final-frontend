@@ -38,7 +38,7 @@ const Products = () => {
     setResponseServer(initialErrorState)
 
     try {
-      const response = await fetch(`http://localhost:3000/products?${query}`, {
+      const response = await fetch(`${API_URL}/products?${query}`, {
         method: "GET"
       })
 
@@ -75,7 +75,7 @@ const Products = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/products/${idProduct}`, {
+      const response = await fetch(`${API_URL}/products/${idProduct}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`

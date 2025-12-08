@@ -39,7 +39,7 @@ const AddProduct = () => {
         formDataToSend.append("image", image)
       }
 
-      const response = await fetch(`http://localhost:3000/products`, {
+      const response = await fetch(`${API_URL}/products`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`

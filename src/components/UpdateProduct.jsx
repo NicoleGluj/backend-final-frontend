@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { CATEGORIES } from "../constants/categories"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const UpdateProduct = ({ product, onUpdate, onClose }) => {
   const [loader, setLoader] = useState(false)
   const [image, setImage] = useState(null)
@@ -39,7 +41,7 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
         formDataToSend.append("image", image)
       }
 
-      const response = await fetch(`http://localhost:3000/products/${product._id}`, {
+      const response = await fetch(`${API_URL}/products/${product._id}`, {
         method: "PATCH",
         headers: {
           "Authorization": `Bearer ${token}`
