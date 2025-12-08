@@ -6,6 +6,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 const Register = () => {
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState("")
+  const [newPassword, setNewPassword] = useState("")
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -21,6 +25,26 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (loading) return
+
+    setError("")
+    setSuccess("")
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailRegex.test(formData.email)) {
+      setError("El correo electrónico no es válido")
+      return
+    }
+    if (newPassword.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres")
+      return
+    }
+    if (newPassword !== formData.password) {
+      setError("Las contraseñas no coinciden")
+      return
+    }
+
+    setLoading(true)
 
     try {
       const response = await fetch(`${API_URL}/auth/register`, {
@@ -36,11 +60,16 @@ const Register = () => {
         return
       }
 
-      alert("Usuario registrado con exito")
-      navigate("/login")
+      setSuccess("Acceso concedido. Redirigiendo...")
+      setTimeout(() => {
+        navigate("/login")
+      }, 1500)
 
     } catch (error) {
-      console.log("Error al registrar el usuario", error)
+      console.error("Error en registro:", error)
+      setError(error.message || "Error inesperado al registrarte")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -48,7 +77,7 @@ const Register = () => {
     <>
       <Layout>
         <section className="flex flex-col items-center justify-center h-[85vh] w-full max-w-[420px] mx-auto px-6">
-          <div className="border border-gray-300 px-15 py-20 rounded-2xl shadow-xl">
+          <div className="border border-gray-300 px-15 py-10 rounded-2xl shadow-xl">
             <div className="flex flex-col">
               <h2 className="text-4xl text-center font-semibold text-[#ecae33] mb-3">
                 Registro
@@ -77,7 +106,8 @@ const Register = () => {
                 <input
                   className="border border-gray-200 p-2 w-full rounded-2xl text-sm text-gray-400 mb-6"
                   type="password"
-                  onChange={handleChange}
+                  name="newPassword"
+                  onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
               <div>
@@ -94,15 +124,33 @@ const Register = () => {
               </div>
               <div className="flex items-center justify-center flex-col">
                 <button
-                  className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
+                  disabled={loading}
+                  className="px-5 py-1 border bg-[#FFA64C] text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400 disabled:opacity-90 disabled:cursor-not-allowed"
                   type="submit"
                 >
-                  Registarse
+                  {loading ? "Creando cuenta..." : "Registrarse"}
                 </button>
                 <p className="text-sm font-medium text-gray-500 mt-3 text-center">
                   ¿Ya tienes una cuenta? <Link className="font-semibold " to="/login"><br />Iniciar sesion</Link>
                 </p>
               </div>
+              {error && (
+                <p
+                  data-testid="error-message"
+                  className="mt-4 text-sm text-[#e74d0b] font-semibold text-center"
+                >
+                  {error}
+                </p>
+              )}
+
+              {success && (
+                <p
+                  data-testid="success-message"
+                  className="mt-4 text-sm text-[#649705]  font-semibold text-center"
+                >
+                  Acceso concedido. Redirigiendo...
+                </p>
+              )}
             </form>
           </div>
         </section>

@@ -1,10 +1,10 @@
 import Layout from "../components/Layout"
-import ImgHome1 from "../assets/home/home1.jpg";
-import ImgHome2 from "../assets/home/home2.jpg";
-import ImgHome3 from "../assets/home/home3.jpg";
-import ImgHome4 from "../assets/home/home4.jpg";
-import ImgHome5 from "../assets/home/home5.jpg";
-import ImgHome6 from "../assets/home/home6.jpg";
+import ImgHome1 from "../assets/home/home1.webp";
+import ImgHome2 from "../assets/home/home2.webp";
+import ImgHome3 from "../assets/home/home3.webp";
+import ImgHome4 from "../assets/home/home4.webp";
+import ImgHome5 from "../assets/home/home5.webp";
+import ImgHome6 from "../assets/home/home6.webp";
 import { Link } from "react-router-dom";
 import { GiftIcon, ShieldCheckIcon, TruckIcon, UserIcon } from "@heroicons/react/16/solid";
 

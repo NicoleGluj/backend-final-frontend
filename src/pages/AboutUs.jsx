@@ -1,7 +1,7 @@
 import Layout from "../components/Layout"
-import img1 from "../assets/about1.jpg"
-import img2 from "../assets/about2.jpg"
-import img3 from "../assets/about3.jpg"
+import img1 from "../assets/about/about1.webp"
+import img2 from "../assets/about/about2.webp"
+import img3 from "../assets/about/about3.webp"
 
 const AboutUs = () => {
   return (
