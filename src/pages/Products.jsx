@@ -5,8 +5,13 @@ import { ToastMessage } from "../components/ToastMessage"
 import { useAuth } from "../context/AuthContext"
 import { Link } from "react-router-dom"
 import UpdateProduct from "../components/UpdateProduct"
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid"
 
 const Products = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
   const initialErrorState = {
     success: null,
     notification: null,
@@ -20,10 +25,10 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [filters, setFilter] = useState({
     name: "",
-    stock: 0,
+    stock: "",
     category: "",
-    minPrice: 0,
-    maxPrice: 0
+    minPrice: "",
+    maxPrice: ""
   })
 
   const [responseServer, setResponseServer] = useState(initialErrorState)
@@ -128,17 +133,17 @@ const Products = () => {
   const handleResetFilters = () => {
     setFilter({
       name: "",
-      stock: 0,
+      stock: "",
       category: "",
-      minPrice: 0,
-      maxPrice: 0
+      minPrice: "",
+      maxPrice: ""
     })
   }
 
   return (
     <>
       <Layout>
-        <section className="py-10 text-center border-b  border-t border-amber-400">
+        <section className=" py-10 text-center border-b  border-t border-amber-400">
           <h1 className="text-5xl font-bold text-[#FDC655] mb-4">
             Nuestros productos
           </h1>
@@ -146,12 +151,111 @@ const Products = () => {
             Conoce todos nuestros productos en esta seccion!
           </p>
         </section>
-        <section className="m-3 border border-gray-300 p-3 rounded-4xl flex justify-between" >
+
+        {/* SECCION FILTROS PANTALLAS GRANDES */}
+        <section className="items-center hidden lg:flex m-3 gap-4">
+          <div className="min-w-[250px] px-5 py-2 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            <Link to="/agregar-producto">AÑADIR PRODUCTO</Link>
+          </div>
+          <div className="border w-full border-gray-300 p-1 px-1 rounded-2xl" >
+            <form
+              onSubmit={handleSubmit}
+              className="flex justify-between">
+              <div className="flex items-center gap-4">
+                <input
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+                  type="text"
+                  name="name"
+                  placeholder="Buscar por nombre"
+                  onChange={handleChange}
+                  value={filters.name}
+                />
+                <input
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+                  type="number"
+                  name="stock"
+                  placeholder="Ingrese el stock"
+                  onChange={handleChange}
+                  value={filters.stock}
+                />
+                <select
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+                  name="category"
+                  onChange={handleChange}
+                  value={filters.category}
+                >
+                  <option defaultValue>
+                    Seleccioná una opción
+                  </option>
+                  {
+                    CATEGORIES.map((category) =>
+                      <option
+                        key={category.id}
+                        value={category.value}
+                      >
+                        {category.content}
+                      </option>)
+                  }
+                </select>
+                <input
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+                  type="number"
+                  name="minPrice"
+                  placeholder="Precio mínimo"
+                  onChange={handleChange}
+                  value={filters.minPrice}
+                />
+                <input
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+                  type="number"
+                  name="maxPrice"
+                  placeholder="Precio máximo"
+                  onChange={handleChange}
+                  value={filters.maxPrice}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  className="px-4 rounded-2xl font-semibold text-[#C7C7C7] transform duration-400 hover:text-[#a0a0a0]"
+                  type="submit">
+                  Aplicar filtros
+                </button>
+                <button
+                  className="bg-[#C7C7C7] transform duration-400 hover:bg-[#a0a0a0] p-1 px-4 rounded-2xl font-semibold text-white"
+                  type="button"
+                  onClick={handleResetFilters}>
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        {/* SECTION PANTALLAS CHICAS */}
+        <div className="flex flex-col items-start mx-4 mt-3 sm:flex-row sm:items-center sm:gap-4">
+
+          <div className="lg:hidden w-full sm:w-fit px-5 py-2 border bg-[#FFA64C] text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            <Link to="/agregar-producto" className="block text-center w-full">
+              AÑADIR PRODUCTO
+            </Link>
+          </div>
+          <div className="mt-3 lg:hidden inline-flex items-center gap-3 border border-gray-400 p-1 px-3 rounded-2xl sm:mt-0 relative">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-500 hover:text-[#eb9665] focus:outline-none"
+            >
+              <AdjustmentsHorizontalIcon className="size-8" />
+            </button>
+            <p className="font-semibold text-gray-500">Filtros</p>
+          </div>
+        </div>
+
+        <section className={`origin-top transform bg-white shadow-md text-center w-full overflow-hidden z-50 transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] scale-y-100 opacity-100 mt-2 flex flex-col gap-4 pb-3" : "max-h-0 scale-y-0 opacity-0"}`} >
           <form
             onSubmit={handleSubmit}
-            className="flex items-center justify-baseline gap-2">
+            className="flex flex-col items-center justify-baseline gap-2 mt-4">
             <input
-              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+              className="min-w-[290px] border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               type="text"
               name="name"
               placeholder="Buscar por nombre"
@@ -159,7 +263,7 @@ const Products = () => {
               value={filters.name}
             />
             <input
-              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+              className="min-w-[290px] border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               type="number"
               name="stock"
               placeholder="Ingrese el stock"
@@ -167,7 +271,7 @@ const Products = () => {
               value={filters.stock}
             />
             <select
-              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+              className="min-w-[290px] border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               name="category"
               onChange={handleChange}
               value={filters.category}
@@ -186,7 +290,7 @@ const Products = () => {
               }
             </select>
             <input
-              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+              className="min-w-[290px] border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               type="number"
               name="minPrice"
               placeholder="Precio mínimo"
@@ -194,29 +298,94 @@ const Products = () => {
               value={filters.minPrice}
             />
             <input
-              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
+              className="min-w-[290px] border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               type="number"
               name="maxPrice"
               placeholder="Precio máximo"
               onChange={handleChange}
               value={filters.maxPrice}
             />
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex justify-center items-center gap-2 m-6">
               <button
-                className="px-4 rounded-2xl font-semibold text-[#C7C7C7]"
+                className="px-4 rounded-2xl font-semibold text-[#C7C7C7] transform duration-400 hover:text-[#a0a0a0]"
                 type="submit">
                 Aplicar filtros
               </button>
               <button
-                className="bg-[#C7C7C7] p-1 px-4 rounded-2xl font-semibold text-white"
+                className="bg-[#C7C7C7] transform duration-400 hover:bg-[#a0a0a0] p-1 px-4 rounded-2xl font-semibold text-white"
                 type="button"
                 onClick={handleResetFilters}>
                 Cancelar
               </button>
             </div>
           </form>
-
         </section>
+
+        {/* PRODUCTOS MAP */}
+        <section className="min-h-[60vh] m-4">
+          <div
+            className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]"
+          >
+            {products.map((p, i) => (
+              <article
+                key={p._id || i}
+                className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col w-full max-w-[300px] mx-auto transition hover:shadow-lg hover:scale-101"
+              >
+                <div className="p-1 flex flex-col flex-1">
+                  <span className="text-xs text-center uppercase font-medium tracking-wide text-gray-500">
+                    {p.category}
+                  </span>
+                </div>
+                <div className="h-60 w-full overflow-hidde bg-gray-100">
+                  {p.image ? (
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover "
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
+                      Sin imagen
+                    </div>
+                  )}
+                </div>
+                <div className="p-5 flex flex-col gap-2 flex-1">
+                  <h3 className="text-lg font-semibold text-[#055087] uppercase">
+                    {p.name}
+                  </h3>
+                  <p className="text-xl font-bold text-gray-900">
+                    ${p.price}
+                  </p>
+                  <p className="text-sm text-gray-500 line-clamp-3">
+                    {p.description}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Stock disponible: <span className="font-medium">{p.stock}</span>
+                  </p>
+                  <div className="mt-4  flex items-center justify-between">
+                    {user && (
+                      <div className="w-full flex gap-2">
+                        <button
+                          onClick={() => handleUpdateProduct(p)}
+                          className="w-1/2 px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
+                        >
+                          Actualizar
+                        </button>
+                        <button
+                          onClick={() => deleteProduct(p._id)}
+                          className="w-1/2 px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
+                        >
+                          Borrar
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section >
+
         {
           selectedProduct &&
           <UpdateProduct
@@ -225,29 +394,8 @@ const Products = () => {
             onUpdate={fetchingProducts}
           />
         }
-        <section>
-          {products.map((p, i) => (
-            <div>
-              <h3>{p.name}</h3>
-              <p>{p.description}</p>
-              <p>{p.price}</p>
-              <p>{p.stock}</p>
-              <p>{p.category}</p>
-              {user &&
-                <div>
-                  <button onClick={() => handleUpdateProduct(p)}>Actualizar</button>
-                  <button onClick={() => deleteProduct(p._id)}>Borrar</button>
-                </div>
-              }
-            </div>))}
-        </section>
-        <Link to="/agregar-producto">AÑADIR PRODUCTO</Link>
-        {responseServer.error.fetch && (
-          <ToastMessage color="red" msg={responseServer.notification} />
-        )}
-        {responseServer.success && (
-          <ToastMessage color="green" msg={responseServer.notification} />
-        )}
+
+
       </Layout >
     </>
   )

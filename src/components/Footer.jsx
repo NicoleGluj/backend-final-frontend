@@ -5,21 +5,21 @@ const Footer = () => {
   return (
     <>
       <footer>
-        <section class="bg-[#FFA64C]">
-          <div class="px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
-            <nav class="flex flex-wrap justify-center -mx-5 -my-2">
-              <div class="px-5 py-2">
-                <Link to="/" class="text-base leading-6 text-white hover:text-gray-900">
+        <section className="bg-[#FFA64C]">
+          <div className="px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
+            <nav className="flex flex-wrap justify-center -mx-5 -my-2">
+              <div className="px-5 py-2">
+                <Link to="/" className="text-base leading-6 text-white hover:text-gray-900">
                   Inicio
                 </Link>
               </div>
-              <div class="px-5 py-2">
-                <Link to="/products" class="text-base leading-6 text-white hover:text-gray-900">
+              <div className="px-5 py-2">
+                <Link to="/products" className="text-base leading-6 text-white hover:text-gray-900">
                   Productos
                 </Link>
               </div>
-              <div class="px-5 py-2">
-                <Link to="/aboutus" class="text-base leading-6 text-white hover:text-gray-900">
+              <div className="px-5 py-2">
+                <Link to="/aboutus" className="text-base leading-6 text-white hover:text-gray-900">
                   Conocenos
                 </Link>
               </div>

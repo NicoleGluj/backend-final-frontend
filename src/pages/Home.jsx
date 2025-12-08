@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <section className="m-4 grid grid-cols-[70%_29%] grid-rows-2 gap-2 h-[85vh]">
+      <section className="m-4 grid grid-cols-[65%_35%] md:grid-cols-[70%_29%] md:grid-rows-2 gap-2 h-[75vh] md:h-[85vh]">
         <div className="row-span-2">
           <img src={ImgHome1} alt="" className="w-full h-full object-cover rounded-xl" />
         </div>
