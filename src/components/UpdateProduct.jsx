@@ -4,6 +4,7 @@ import { CATEGORIES } from "../constants/categories"
 
 const UpdateProduct = ({ product, onUpdate, onClose }) => {
   const [loader, setLoader] = useState(false)
+  const [image, setImage] = useState(null)
   const [formData, setFormData] = useState({
     name: product.name,
     description: product.description,
@@ -23,23 +24,36 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-
-    const dataToUpdate = {
-      ...formData,
-      price: Number(formData.price),
-      stock: Number(formData.stock)
-    }
-
     try {
       setLoader(true)
+
+      const formDataToSend = new FormData()
+
+      formDataToSend.append("name", formData.name)
+      formDataToSend.append("description", formData.description)
+      formDataToSend.append("price", formData.price)
+      formDataToSend.append("stock", formData.stock)
+      formDataToSend.append("category", formData.category)
+
+      if (image) {
+        formDataToSend.append("image", image)
+      }
+
       const response = await fetch(`http://localhost:3000/products/${product._id}`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(dataToUpdate)
+        body: formDataToSend
       })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success) {
+        console.log("Error desde backend:", data)
+        alert(data.message || "No se pudo actualizar el producto")
+        return
+      }
 
       onUpdate()
       onClose()
@@ -113,7 +127,6 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
               onChange={handleChange}
             >
               <option value="">Seleccioná una opción</option>
-
               {CATEGORIES.map((category) => (
                 <option key={category.id} value={category.value}>
                   {category.content}
@@ -121,8 +134,16 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
               ))}
             </select>
           </div>
-
-          {/* Botones */}
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-medium text-gray-600">Imagen:</p>
+            <input
+              className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </div>
           <div className="flex justify-end gap-2 mt-4">
             <button
               type="button"

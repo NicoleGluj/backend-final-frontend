@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import Layout from "../components/Layout"
+import { CATEGORIES } from "../constants/categories"
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -8,9 +10,9 @@ const AddProduct = () => {
     description: "",
     price: "",
     stock: "",
-    category: ""
+    category: "",
   })
-
+  const [image, setImage] = useState(null)
   const navigate = useNavigate()
   const { token } = useAuth()
 
@@ -24,24 +26,31 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const dataToSend = {
-      ...formData,
-      price: Number(formData.price),
-      stock: Number(formData.stock)
-    }
-
     try {
+      const formDataToSend = new FormData()
+
+      formDataToSend.append("name", formData.name)
+      formDataToSend.append("description", formData.description)
+      formDataToSend.append("price", formData.price)
+      formDataToSend.append("stock", formData.stock)
+      formDataToSend.append("category", formData.category)
+
+      if (image) {
+        formDataToSend.append("image", image)
+      }
+
       const response = await fetch(`http://localhost:3000/products`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(dataToSend)
+        body: formDataToSend
       })
 
-      if (!response) {
-        alert("No se pudo agregar el producto")
+      const data = await response.json()
+
+      if (!response.ok || !data.success) {
+        alert(data.error || "No se pudo agregar el producto")
         return
       }
 
@@ -51,83 +60,125 @@ const AddProduct = () => {
         description: "",
         price: "",
         stock: "",
-        category: ""
+        category: "",
+        image: ""
       })
-      navigate("/")
+      setImage(null)
+
+      navigate("/products")
     } catch (error) {
       console.log("Error al agregar el producto")
     }
   }
 
   return (
-    <>
+    <Layout>
       <section>
-        <div>
+        <div className="py-10 text-center border-b  border-t border-amber-400">
           <h1 className="text-5xl font-bold text-[#FDC655] mb-4">
             Agregar producto
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Completa los datos para agregar un nuevo producto
+            Completa toda la informacion para agregar un nuevo producto
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <p>Nombre:</p>
-            <input
-              type="text"
-              name="name"
-              minLength={3}
-              maxLength={20}
-              onChange={(e) => handleChange(e)}
-              value={formData.name}
-            />
-          </div>
-          <div>
-            <p>Descripcion:</p>
-            <input
-              type="text"
-              name="description"
-              minLength={3}
-              maxLength={200}
-              onChange={(e) => handleChange(e)}
-              value={formData.description}
-            />
-          </div>
-          <div>
-            <p>Precio:</p>
-            <input
-              type="number"
-              name="price"
-              minLength={0}
-              onChange={(e) => handleChange(e)}
-              value={formData.price}
-            />
-          </div>
-          <div>
-            <p>Stock:</p>
-            <input
-              type="number"
-              name="stock"
-              minLength={0}
-              onChange={(e) => handleChange(e)}
-              value={formData.stock}
-            />
-          </div>
-          <div>
-            <p>Categoria:</p>
-            <input
-              type="text"
-              name="category"
-              minLength={3}
-              maxLength={20}
-              onChange={(e) => handleChange(e)}
-              value={formData.category}
-            />
-          </div>
-          <button type="submit">Agregar</button>
-        </form>
+        <div className="m-4 min-h-[50vh]">
+          <form
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-3 max-w-lg mx-auto mt-6"
+          >
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-gray-600">Nombre:</p>
+              <input
+                className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                type="text"
+                name="name"
+                minLength={3}
+                maxLength={20}
+                required
+                onChange={handleChange}
+                value={formData.name}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-gray-600">Descripción:</p>
+              <input
+                className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                type="text"
+                name="description"
+                minLength={3}
+                maxLength={200}
+                required
+                onChange={handleChange}
+                value={formData.description}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-gray-600">Precio:</p>
+              <input
+                className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                type="number"
+                name="price"
+                min={0}
+                required
+                onChange={handleChange}
+                value={formData.price}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-gray-600">Stock:</p>
+              <input
+                className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                type="number"
+                name="stock"
+                min={0}
+                required
+                onChange={handleChange}
+                value={formData.stock}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-gray-600">Categoría:</p>
+              <select
+                className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                name="category"
+                required
+                value={formData.category}
+                onChange={handleChange}
+              >
+                <option value="">Seleccioná una opción</option>
+                {CATEGORIES.map(category => (
+                  <option key={category.id} value={category.value}>
+                    {category.content}
+                  </option>
+                ))}
+              </select>
+              <div className="flex flex-col gap-1 mt-2">
+                <p className="text-sm font-medium text-gray-600">Imagen:</p>
+                <input
+                  className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400 w-full"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                type="submit"
+                className="px-5 py-1 border-2 border-[#FFA64C] text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
+              >
+                Agregar
+              </button>
+            </div>
+          </form>
+
+        </div>
       </section>
-    </>
+
+    </Layout>
   )
 }
 

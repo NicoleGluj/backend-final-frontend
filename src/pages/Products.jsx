@@ -339,9 +339,9 @@ const Products = () => {
                 <div className="h-60 w-full overflow-hidde bg-gray-100">
                   {p.image ? (
                     <img
-                      src={p.image}
+                      src={`http://localhost:3000/${p.image.replace(/\\/g, "/")}`}
                       alt={p.name}
-                      className="w-full h-full object-cover "
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
