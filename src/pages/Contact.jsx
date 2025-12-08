@@ -39,6 +39,16 @@ const Contact = () => {
       })
 
       const dataResponse = await response.json()
+
+      if (!response.ok || dataResponse?.success === false) {
+        setError(
+          dataResponse?.error ||
+          dataResponse?.message ||
+          "Error al enviar el correo"
+        )
+        return
+      }
+
       setSuccess("Correo enviado con éxito")
 
       setForm({
@@ -126,7 +136,7 @@ const Contact = () => {
                 data-testid="success-message"
                 className="mt-4 text-sm text-[#649705]  font-semibold text-center"
               >
-                Correo enviado con exito
+                {success}
               </p>
             )}
           </form>
