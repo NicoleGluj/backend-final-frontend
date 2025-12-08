@@ -3,6 +3,8 @@ import Layout from "../components/Layout"
 import { CATEGORIES } from "../constants/categories"
 import { ToastMessage } from "../components/ToastMessage"
 import { useAuth } from "../context/AuthContext"
+import { Link } from "react-router-dom"
+import UpdateProduct from "../components/UpdateProduct"
 
 const Products = () => {
   const initialErrorState = {
@@ -26,9 +28,9 @@ const Products = () => {
 
   const [responseServer, setResponseServer] = useState(initialErrorState)
 
-  const [user, setUser] = useAuth()
+  const { user, token } = useAuth()
 
-  const fetchingProducts = async () => {
+  const fetchingProducts = async (query = "") => {
     setResponseServer(initialErrorState)
 
     try {
@@ -168,7 +170,7 @@ const Products = () => {
               className="border border-gray-200 p-1 px-2 rounded-2xl text-sm text-gray-400"
               name="category"
               onChange={handleChange}
-              value={filters.name}
+              value={filters.category}
             >
               <option defaultValue>
                 Seleccioná una opción
@@ -199,21 +201,30 @@ const Products = () => {
               onChange={handleChange}
               value={filters.maxPrice}
             />
+            <div className="flex justify-center items-center gap-2">
+              <button
+                className="px-4 rounded-2xl font-semibold text-[#C7C7C7]"
+                type="submit">
+                Aplicar filtros
+              </button>
+              <button
+                className="bg-[#C7C7C7] p-1 px-4 rounded-2xl font-semibold text-white"
+                type="button"
+                onClick={handleResetFilters}>
+                Cancelar
+              </button>
+            </div>
           </form>
-          <div className="flex justify-center items-center gap-2">
-            <button
-              className="px-4 rounded-2xl font-semibold text-[#C7C7C7]"
-              type="submit">
-              Aplicar filtros
-            </button>
-            <button
-              className="bg-[#C7C7C7] p-1 px-4 rounded-2xl font-semibold text-white"
-              type="button"
-              onClick={handleResetFilters}>
-              Cancelar
-            </button>
-          </div>
+
         </section>
+        {
+          selectedProduct &&
+          <UpdateProduct
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+            onUpdate={fetchingProducts}
+          />
+        }
         <section>
           {products.map((p, i) => (
             <div>
@@ -230,6 +241,7 @@ const Products = () => {
               }
             </div>))}
         </section>
+        <Link to="/agregar-producto">AÑADIR PRODUCTO</Link>
         {responseServer.error.fetch && (
           <ToastMessage color="red" msg={responseServer.notification} />
         )}

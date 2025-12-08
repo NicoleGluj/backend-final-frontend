@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import { useAuth } from "../context/AuthContext"
 
@@ -11,6 +11,9 @@ const Login = () => {
 
   const { login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const from = location.state?.from?.pathname || "/"
 
   const handleChange = (e) => {
     setFormData({
@@ -30,15 +33,14 @@ const Login = () => {
 
       const responseData = await response.json()
 
-      if (!responseData) {
-        alert(responseData.error || "Error al iniciar sesion")
+      if (!response.ok || !responseData.success) {
+        alert(responseData.error || responseData.messagge || "Error al iniciar sesión")
         return
       }
 
-      // login (responseData.token)
+      login(responseData.token)
       alert("Usuario logueado con exito")
-      navigate("/")
-
+      navigate(from, { replace: true })
     } catch (error) {
       console.log("Error al loguear el usuario", error)
     }

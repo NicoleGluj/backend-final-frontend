@@ -10,7 +10,7 @@ const UpdateProduct = ({ product, onUpdate, onClose }) => {
     price: Number(product.price),
     category: product.category
   })
-  const [token, setToken] = useAuth()
+  const { token } = useAuth()
 
   const handleChange = (e) => {
     setFormData({
