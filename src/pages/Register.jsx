@@ -2,6 +2,9 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Register = () => {
   const [formData, setFormData] = useState({
     email: "",

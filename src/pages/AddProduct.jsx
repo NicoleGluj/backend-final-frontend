@@ -4,6 +4,9 @@ import { useAuth } from "../context/AuthContext"
 import Layout from "../components/Layout"
 import { CATEGORIES } from "../constants/categories"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const AddProduct = () => {
   const [formData, setFormData] = useState({
     name: "",

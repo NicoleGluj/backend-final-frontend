@@ -6,6 +6,9 @@ import { Link } from "react-router-dom"
 import UpdateProduct from "../components/UpdateProduct"
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Products = () => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => {

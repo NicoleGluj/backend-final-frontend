@@ -1,6 +1,9 @@
 import { useState } from "react"
 import Layout from "../components/Layout"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Contact = () => {
   const [form, setForm] = useState({
     email: "",

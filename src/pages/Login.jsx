@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import { useAuth } from "../context/AuthContext"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
