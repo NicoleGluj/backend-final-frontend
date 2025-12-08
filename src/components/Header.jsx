@@ -2,9 +2,11 @@ import { Link } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid"
+import { useAuth } from "../context/AuthContext"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const { user, logout } = useAuth()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -49,18 +51,28 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className="hidden lg:flex items-center justify-center gap-3 mr-6 ml-auto">
-        <Link
-          to="/register"
-          className="px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
-          Registrarme
-        </Link>
-        <Link
-          to="/login"
-          className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
-          Iniciar Sesion
-        </Link>
-      </div>
+      {!user &&
+        <div className="hidden lg:flex items-center justify-center gap-3 mr-6 ml-auto">
+          <Link
+            to="/register"
+            className="px-5 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            Registrarme
+          </Link>
+          <Link
+            to="/login"
+            className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            Iniciar Sesion
+          </Link>
+        </div>}
+      {user &&
+        <div className="hidden lg:flex items-center justify-center gap-3 mr-6 ml-auto">
+          <button
+            onClick={logout}
+            className="px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+            Cerrar sesion
+          </button>
+        </div>
+      }
 
       <div className="m-6 lg:hidden ml-auto">
         <button
@@ -112,19 +124,30 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <div className={`lg:hidden flex flex-col items-center justify-center w-auto mx-auto gap-2 bg-white pb-4 pt-2 origin-top transform transition-all duration-300 ease-in-out ${isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
-          }`}>
-          <Link
-            to="/register"
-            className="px-10 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
-            Registrarme
-          </Link>
-          <Link
-            to="/login"
-            className="px-10 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
-            Iniciar Sesion
-          </Link>
-        </div>
+        {!user &&
+          <div className={`lg:hidden flex flex-col items-center justify-center w-auto mx-auto gap-2 bg-white pb-4 pt-2 origin-top transform transition-all duration-300 ease-in-out ${isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+            }`}>
+            <Link
+              to="/register"
+              className="px-10 py-0.5 border-2 border-[#FFA64C]  text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+              Registrarme
+            </Link>
+            <Link
+              to="/login"
+              className="px-10 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400">
+              Iniciar Sesion
+            </Link>
+          </div>}
+        {
+          user &&
+          <div>
+            <button
+              onClick={logout}
+              className="px-10 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400 mb-8">
+              Cerrar sesion
+            </button>
+          </div>
+        }
       </section>
 
     </header >
