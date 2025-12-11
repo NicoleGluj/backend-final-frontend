@@ -14,12 +14,6 @@ const getImageUrl = (image) => {
   return `${API_URL}/${image.replace(/\\/g, "/")}`;
 };
 
-const getImageUrl = (image) => {
-  if (!image) return "";
-  if (image.startsWith("http")) return image;
-  return `${API_URL}/${image.replace(/\\/g, "/")}`;
-};
-
 const Products = () => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => {
