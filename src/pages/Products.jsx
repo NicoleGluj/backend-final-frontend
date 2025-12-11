@@ -14,10 +14,13 @@ const getImageUrl = (image) => {
   return `${API_URL}/${image.replace(/\\/g, "/")}`;
 };
 
+const getImageUrl = (image) => {
+  if (!image) return "";
+  if (image.startsWith("http")) return image;
+  return `${API_URL}/${image.replace(/\\/g, "/")}`;
+};
+
 const Products = () => {
-  const [deleteOpen, setDeleteOpen] = useState(false)
-  const [productToDelete, setProductToDelete] = useState(null)
-  const [deleteLoading, setDeleteLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -80,18 +83,13 @@ const Products = () => {
     fetchingProducts()
   }, [])
 
-  const handleAskDelete = (idProduct) => {
-    setProductToDelete(idProduct)
-    setDeleteOpen(true)
-  }
-
-  const deleteProduct = async () => {
-    if (!productToDelete) return
-
-    setDeleteLoading(true)
+  const deleteProduct = async (idProduct) => {
+    if (!confirm("Esta seguro que desea eliminar el producto?")) {
+      return
+    }
 
     try {
-      const response = await fetch(`${API_URL}/products/${productToDelete}`, {
+      const response = await fetch(`${API_URL}/products/${idProduct}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -105,7 +103,7 @@ const Products = () => {
         return
       }
 
-      setProducts(products.filter((p) => p._id !== productToDelete))
+      setProducts(products.filter((p) => p._id !== idProduct))
       alert("Producto borrado con exito")
     } catch (e) {
       setResponseServer({
@@ -117,10 +115,6 @@ const Products = () => {
         success: false,
         notification: "Error al eliminar el producto"
       })
-    } finally {
-      setDeleteLoading(false)
-      setDeleteOpen(false)
-      setProductToDelete(null)
     }
   }
 
@@ -157,7 +151,6 @@ const Products = () => {
       minPrice: "",
       maxPrice: ""
     })
-    setIsOpen(false)
   }
 
   return (
@@ -356,7 +349,7 @@ const Products = () => {
                     {p.category}
                   </span>
                 </div>
-                <div className="h-60 w-full overflow-hidde bg-gray-100">
+                <div className="h-60 w-full overflow-hidden bg-gray-100">
                   {p.image ? (
                     <img
                       src={getImageUrl(p.image)}
@@ -392,7 +385,7 @@ const Products = () => {
                           Actualizar
                         </button>
                         <button
-                          onClick={() => handleAskDelete(p._id)}
+                          onClick={() => deleteProduct(p._id)}
                           className="w-1/2 px-5 py-1 border bg-[#FFA64C]  text-white rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400"
                         >
                           Borrar
@@ -406,42 +399,6 @@ const Products = () => {
           </div>
         </section >
 
-        {deleteOpen && (
-          <section className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="bg-white rounded-3xl shadow-xl w-full max-w-lg mx-4 p-6 relative">
-              <button
-                type="button"
-                onClick={() => setDeleteOpen(false)}
-                className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-4xl leading-none"
-              >
-                ×
-              </button>
-              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                ¿Desea eliminar el producto?
-              </h2>
-              <p className="text-sm text-gray-500">
-                Esta acción no se puede deshacer.
-              </p>
-              <div className="flex justify-end gap-2 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setDeleteOpen(false)}
-                  className="bg-[#C7C7C7] transform duration-400 hover:bg-[#a0a0a0] px-4 py-1 rounded-2xl font-semibold text-white"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  onClick={deleteProduct}
-                  disabled={deleteLoading}
-                  className="px-4 py-1 border-2 border-[#FFA64C] text-[#FFA64C] rounded-2xl font-medium transform hover:-translate-y-1 transition duration-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {deleteLoading ? "Eliminando..." : "Eliminar"}
-                </button>
-              </div>
-            </div>
-          </section>
-        )}
         {
           selectedProduct &&
           <UpdateProduct
