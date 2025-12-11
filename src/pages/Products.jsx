@@ -8,6 +8,11 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const getImageUrl = (image) => {
+  if (!image) return "";
+  if (image.startsWith("http")) return image;
+  return `${API_URL}/${image.replace(/\\/g, "/")}`;
+};
 
 const Products = () => {
   const [deleteOpen, setDeleteOpen] = useState(false)
@@ -354,7 +359,7 @@ const Products = () => {
                 <div className="h-60 w-full overflow-hidde bg-gray-100">
                   {p.image ? (
                     <img
-                      src={`${API_URL}/${p.image.replace(/\\/g, "/")}`}
+                      src={getImageUrl(p.image)}
                       alt={p.name}
                       className="w-full h-full object-cover"
                     />
